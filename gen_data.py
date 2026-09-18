@@ -1,10 +1,10 @@
-import json, random
+import json
+import random
 
 random.seed(42)
 
 MONTHS = ["March 2026", "April 2026", "May 2026", "June 2026", "July 2026", "August 2026"]
 
-# category -> (list of (brand, [model names]), base_low_range, base_high_multiplier_range)
 CATALOG = {
     "Smartphones": {
         "brands": {
@@ -203,7 +203,6 @@ CATALOG = {
 }
 
 def indian_round(n):
-    # round to nearest 99 or 999 style pricing like real listings, keep simple: round to nearest 100 then -1
     n = int(round(n / 100.0) * 100)
     if n > 999:
         n -= 1
@@ -211,9 +210,6 @@ def indian_round(n):
 
 products = []
 pid = 1
-category_names = list(CATALOG.keys())
-
-# Build a flat pool of (category, brand, model) combos
 combo_pool = []
 for cat, info in CATALOG.items():
     for brand, models in info["brands"].items():
@@ -222,7 +218,6 @@ for cat, info in CATALOG.items():
 
 random.shuffle(combo_pool)
 
-# We need ~500 products; repeat pool with variant suffixes if needed
 TARGET = 500
 variants = ["", " (128GB)", " (256GB)", " (Wi-Fi)", " (Wi-Fi + Cellular)", " (2024)", " (2023)", " 2nd Gen"]
 
@@ -246,7 +241,6 @@ while len(products) < TARGET:
     mult = random.uniform(mult_min, mult_max)
     base_high = base_low * mult
 
-    # simulate 6 months of gentle random-walk price movement (demo data)
     history = []
     cur_low, cur_high = base_low, base_high
     for m in MONTHS:
@@ -270,13 +264,11 @@ while len(products) < TARGET:
     })
     pid += 1
 
-print(f"Generated {len(products)} products")
-
-with open("/home/claude/pricetracker/data.js", "w") as f:
-    f.write("// Demo historical price dataset — replace with verified prices.\n")
-    f.write("// This data is NOT live and NOT verified real-world pricing.\n")
-    f.write("const PRODUCTS = ")
-    f.write(json.dumps(products, indent=None, separators=(",", ":")))
+# Writes data.js in the current root folder
+with open("data.js", "w", encoding="utf-8") as f:
+    f.write("// Demo historical price dataset\n")
+    f.write("window.PRODUCTS = ")
+    f.write(json.dumps(products, separators=(",", ":")))
     f.write(";\n")
 
-print("Wrote data.js")
+print(f"Successfully generated data.js with {len(products)} products.")
