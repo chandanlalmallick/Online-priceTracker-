@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Tracker — 6-Month Historical Electronics Price Report</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <h1 class="logo">PRICE TRACKER</h1>
+    <p class="subtitle">6-Month Historical Electronics Price Report</p>
+  </div>
+</header>
+
+<div class="demo-banner">
+  Demo historical data — replace with verified prices.
+</div>
+
+<main id="main-view">
+
+  <section class="controls">
+    <input
+      type="text"
+      id="searchInput"
+      class="search-box"
+      placeholder="Search products…"
+      aria-label="Search products by name, brand, model or category"
+      autocomplete="off"
+    >
+    <select id="categorySelect" class="category-select" aria-label="Filter by category">
+      <option value="All">All Categories</option>
+      <option value="Smartphones">Smartphones</option>
+      <option value="Laptops">Laptops</option>
+      <option value="Televisions">TVs</option>
+      <option value="Cameras">Cameras</option>
+      <option value="Gaming">Gaming</option>
+      <option value="Tablets">Tablets</option>
+      <option value="Audio">Audio</option>
+      <option value="Monitors">Monitors</option>
+      <option value="Appliances">Appliances</option>
+      <option value="Other">Other</option>
+    </select>
+  </section>
+
+  <p id="resultCount" class="result-count"></p>
+
+  <section id="productGrid" class="product-grid" aria-live="polite"></section>
+
+  <p id="noResults" class="no-results" hidden>No products found.</p>
+
+</main>
+
+<section id="detailView" class="detail-view" hidden>
+  <div class="detail-inner">
+    <button id="backButton" class="back-button" type="button">&larr; Back to all products</button>
+
+    <div id="detailContent"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p class="footer-note">Historical price information only. Prices shown represent the recorded monthly low and high in the dataset.</p>
+  <p class="footer-title">Price Tracker — Historical Electronics Price Reports</p>
+  <p class="footer-disclaimer">Prices should be independently verified before purchase.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
